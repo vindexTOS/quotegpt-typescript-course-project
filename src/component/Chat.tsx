@@ -1,26 +1,29 @@
 import React from 'react'
-
+import { UseMainContext, ChatType } from '../context'
+import { assetData } from '../assets/asset-data'
 const Chat = () => {
+  const { userChat, scroll } = UseMainContext()
+
   return (
-    <section className="h-[100vh] w-[100vw]  overflow-y-scroll    sticky top-0  scroll ">
-      {userChat?.map((val, index) => {
+    <section className="section">
+      {userChat?.map((val: ChatType, index) => {
+        const { user, bot } = val
         return (
-          <div key={index} className="flex flex-col    ">
-            <div className="flex items-center text-white    gap-5  min-h-[4rem]  max-h-[2000px]   w-[100vw]  ">
-              <img
-                src={dogPhoto.Dogimg}
-                className="w-[30px] h-[30px] rounded-[8px]  max_sm:ml-1 ml-[6rem]"
-              />
-              <p>{val.text}</p>
+          <div
+            onClick={() => console.log(bot)}
+            key={index}
+            className="flex-container"
+          >
+            <div className="user-message">
+              <img src={assetData.userPhoto} />
+              <p>{user}</p>
             </div>
-            <div className="flex items-center bg-[#444654] gap-5  min-h-[4rem] text-white  max-h-[2000px]   w-[100vw]  ">
-              <img
-                src={Dog}
-                className="w-[30px] h-[30px] rounded-[8px]   max_sm:ml-1 ml-[6rem]"
-              />
-              <p>{val.bot}</p>
+            <div className="bot-message">
+              <img src={assetData.botPhoto} />
+
+              <p>{bot.text}</p>
             </div>
-            <span ref={scroll}></span>
+            <span ref={scroll} className="scroll-marker"></span>
           </div>
         )
       })}

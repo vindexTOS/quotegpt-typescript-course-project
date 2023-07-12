@@ -11,8 +11,6 @@ body {
 .flex-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  justify-content: space-between;
 }
 
 .header {
@@ -39,4 +37,128 @@ body {
 
 .header .flex-container p {
   color: #ffffff;
+}
+
+.section {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+  position: sticky;
+  top: 0;
+  scroll-behavior: smooth;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container {
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-message {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+  min-height: 4rem;
+
+  max-height: 2000px;
+  width: 95%;
+  padding-left: 20px;
+}
+.bot-message {
+  display: flex;
+  align-items: center;
+  background-color: #444654;
+  gap: 5px;
+  min-height: 4rem;
+  color: white;
+  max-height: 2000px;
+  width: 95%;
+  padding-left: 20px;
+}
+
+.user-message img {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  margin-left: 6rem;
+}
+
+.section .flex-container .user-message p {
+  color: white;
+}
+
+.section .flex-container .bot-message img {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  margin-left: 6rem;
+}
+
+.section .flex-container .bot-message p {
+  color: white;
+}
+
+.section .scroll-marker {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+}
+
+.container {
+  width: 100vw;
+  height: 100px;
+  background-color: #343541;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-opacity: 0.5;
+  position: sticky;
+  z-index: 10;
+}
+
+.inner-container {
+  width: 60%;
+  height: 3rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 96%;
+  height: 3rem;
+  border-radius: 8px;
+  color: white;
+  background-color: #464653;
+  border: none;
+  outline: none;
+  margin-left: 2px;
+}
+
+.icon {
+  color: gray;
+  cursor: pointer;
+  padding-left: 10px;
+  font-size: 1.5rem;
+}
+
+.icon:hover {
+  color: rgb(0, 140, 255);
+}
+input {
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+:-webkit-autofill {
+  color: #fff !important;
+}
+@media (max-width: 1023px) {
+  .icon {
+    margin-right: 5px;
+  }
 }

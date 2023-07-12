@@ -1,6 +1,23 @@
 import { createContext, useContext, useEffect, useState, useRef } from 'react'
 import axios from 'axios'
-type Cell = {}
+
+type QuoteType = {
+  text: string
+  author?: string
+}
+export type ChatType = {
+  bot: QuoteType
+  user: string
+}
+type Cell = {
+  userChat: ChatType[]
+  setUserChat: React.Dispatch<React.SetStateAction<ChatType[]>>
+  userText: string
+  setUserText: React.Dispatch<React.SetStateAction<string>>
+  messageSend: () => void
+  bot: QuoteType | undefined
+  scroll: React.MutableRefObject<HTMLElement | null>
+}
 
 const Context = createContext<Cell | null>(null)
 
@@ -9,36 +26,56 @@ export const ContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const scroll = useRef(null)
-  const [userChat, setUserChat] = useState([])
+  const scroll = useRef<HTMLElement | null>(null)
+  const [userChat, setUserChat] = useState<ChatType[]>([])
   const [userText, setUserText] = useState('')
 
-  const [bot, setBot] = useState(['Hi, Ask Me About Dog Facts'])
-  const [ban, setBan] = useState(false)
+  const [bot, setBot] = useState<QuoteType>()
   const quoteAPI = 'https://type.fit/api/quotes'
 
   useEffect(() => {
-    const data = axios
+    const randomNum = Math.floor(Math.random() * 100)
+    axios
       .get(quoteAPI)
       .then((res) => {
-        setBot(res.data)
+        setBot(res.data[randomNum])
       })
       .catch(function (error) {
         console.error(error)
       })
-    //after
     console.log(bot)
-  }, [userText])
-  //   const messageSend = () => {
-  //     if (userText !== '') {
-  //       setUserChat([...userChat, { text: userText, bot: bot?.facts }])
-  //       setUserText('')
-  //     }
-  //     scroll.current.scrollIntoView({
-  //       behavior: 'smooth',
-  //     })
-  //   }
-  return <Context.Provider value={{ userChat }}>{children}</Context.Provider>
+  }, [scroll])
+  const messageSend = () => {
+    if (userText !== '') {
+      setUserChat([
+        ...userChat,
+        { user: userText, bot: { text: bot?.text || 'no connection' } },
+      ])
+      setUserText('')
+    }
+  }
+  useEffect(() => {
+    if (scroll.current) {
+      scroll.current.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  }, [userChat])
+  return (
+    <Context.Provider
+      value={{
+        userChat,
+        setUserChat,
+        userText,
+        setUserText,
+        messageSend,
+        bot,
+        scroll,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  )
 }
 
 export const UseMainContext = () => {
