@@ -9,11 +9,7 @@ const Chat = () => {
       {userChat?.map((val: ChatType, index) => {
         const { user, bot } = val
         return (
-          <div
-            onClick={() => console.log(bot)}
-            key={index}
-            className="flex-container"
-          >
+          <div key={index} className="flex-container">
             <div className="user-message">
               <img src={assetData.userPhoto} />
               <p>{user}</p>
